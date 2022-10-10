@@ -1,26 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+import InputField from './components/InputField';
+import { Todo } from './Model';
+
+const App: React.FC = () => {
+    const [todo, setTodo] = useState<string | number>('');
+    const [todos, setTodos] = useState<Todo[]>([]);
+    const handleAddTodo = (e: React.FormEvent) => {
+        e.preventDefault();
+        if (todo) {
+            setTodos([...todos, { id: Date.now(), todo, isDone: false }]);
+            setTodo('');
+        }
+    };
+    console.log(todos);
+
+    return (
+        <div className="w-[100vw] h-[100vh] flex flex-col items-center bg-blue-500">
+            <div>
+                <h1 className="uppercase text-4xl my-30 mx-0 z-10 text-center text-white font-bold">
+                    Drag
+                </h1>
+            </div>
+            <InputField todo={todo} setTodo={setTodo} handleAddTodo={handleAddTodo} />
+        </div>
+    );
+};
 
 export default App;
