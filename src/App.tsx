@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import InputField from './components/InputField';
+import TodoList from './components/TodoList';
 import { Todo } from './Model';
 
 const App: React.FC = () => {
@@ -10,10 +11,9 @@ const App: React.FC = () => {
         e.preventDefault();
         if (todo) {
             setTodos([...todos, { id: Date.now(), todo, isDone: false }]);
-            setTodo('');
         }
+        setTodo('');
     };
-    console.log(todos);
 
     return (
         <div className="w-[100vw] h-[100vh] flex flex-col items-center bg-blue-500">
@@ -23,6 +23,7 @@ const App: React.FC = () => {
                 </h1>
             </div>
             <InputField todo={todo} setTodo={setTodo} handleAddTodo={handleAddTodo} />
+            <TodoList todos={todos} setTodos={setTodos} />
         </div>
     );
 };

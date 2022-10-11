@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 
 interface Props {
     todo: string | number;
@@ -6,10 +6,19 @@ interface Props {
     handleAddTodo: (e: React.FormEvent) => void;
 }
 const InputField: React.FC<Props> = ({ todo, setTodo, handleAddTodo }) => {
+    const inputRef = useRef<HTMLInputElement>(null);
     return (
-        <form onSubmit={handleAddTodo} className="flex w-[90%] relative items-center">
+        <form
+            onSubmit={(e) => {
+                handleAddTodo(e);
+                inputRef.current?.blur();
+            }}
+            className="flex w-[90%] relative items-center"
+        >
             <input
                 type="text"
+                ref={inputRef}
+                value={todo ? todo : ''}
                 className="w-[100%] rounded-3xl text-2xl border-none transition-all px-4 p-1 outline-none duration-200 shadow-inner focus:shadow-3xl"
                 placeholder="Enter Task"
                 onChange={(e) => setTodo(e.target.value)}
